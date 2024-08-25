@@ -24,17 +24,29 @@
 
 ## Problems Resolved
 
-```js
-const protectedRoutes = createRouteMatcher([
-  "/",
-  "/upcoming",
-  "/previous",
-  "/recordings",
-  "/personal-room",
-  "/meeting(.*)",
-]);
+> [!WARNING]
+>
+> ### Issue 1 : `Clerk` initial redirection
+>
+> When first visiting `Clerk` it redirects to some random route instead of home.
+> Current : http://localhost:3000/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2F
+> Required : http://localhost:3000/
 
-export default clerkMiddleware((auth, req) => {
-  if (protectedRoutes(req)) auth().protect();
-});
-```
+> [!NOTE]
+>
+> ### Issue 2 : Protecting routes with `clerkMiddleware`
+>
+> ```js
+> const protectedRoutes = createRouteMatcher([
+>   "/",
+>   "/upcoming",
+>   "/previous",
+>   "/recordings",
+>   "/personal-room",
+>   "/meeting(.*)",
+> ]);
+>
+> export default clerkMiddleware((auth, req) => {
+>   if (protectedRoutes(req)) auth().protect();
+> });
+> ```

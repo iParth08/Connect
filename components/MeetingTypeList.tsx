@@ -1,46 +1,18 @@
 "use client";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import MeetingModel from "./MeetingModel";
+import Tiles from "./Tiles";
 
 const MeetingTypeList = () => {
   const router = useRouter();
   const [meetingState, setMeetigState] = useState<
     "isScheduleMeeting" | "isJoiningMeeting" | "isInstantMeeting" | undefined
-  >();
-  const Tiles = ({
-    img,
-    description,
-    title,
-    bgcolor,
-    handleClick,
-  }: {
-    img: string;
-    description: string;
-    title: string;
-    bgcolor: string;
-    handleClick: () => void;
-  }) => {
-    return (
-      <div
-        className={cn(
-          `flex flex-col py-6 px-4 justify-between w-full xl:max-w-[270px] min-h-[260px] rounded-[14px] cursor-pointer`,
-          bgcolor
-        )}
-        onClick={handleClick}
-      >
-        <div className="flex justify-center items-center glassmorphism size-12 rounded-[10px]">
-          <Image src={img} alt="add meeting" width={27} height={27} />
-        </div>
+  >(undefined);
 
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <p className="text-lg font-normal">{description}</p>
-        </div>
-      </div>
-    );
-  };
+  const createMeeting = () => {};
+
   return (
     <section className="grid grid-cols-1 gap-5 md:grid-cols-2  xl:grid-cols-4">
       <Tiles
@@ -70,6 +42,15 @@ const MeetingTypeList = () => {
         description="Via invitation link."
         bgcolor="bg-yellow-1"
         handleClick={() => setMeetigState("isJoiningMeeting")}
+      />
+      <MeetingModel
+        isOpen={meetingState === "isInstantMeeting"}
+        onClose={() => setMeetigState(undefined)}
+        title="Instant Meeting"
+        description="Start an instant meeting. You can join from any device."
+        classProperty="text-center"
+        buttonText="Start Meeting"
+        handleClick={createMeeting}
       />
     </section>
   );

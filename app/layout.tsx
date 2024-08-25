@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "A video call webapp by NextJS",
 };
 
+const frontendApi = "http://localhost:3000";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +23,7 @@ export default function RootLayout({
         appearance={{
           layout: {
             logoImageUrl: "icons/logo.svg",
-            socialButtonsVariant: "iconButton"
+            socialButtonsVariant: "iconButton",
           },
           variables: {
             colorText: "#FFF",
@@ -29,7 +31,7 @@ export default function RootLayout({
             colorBackground: "#1C1F2E",
             colorInputBackground: "#252A41",
             colorInputText: "#FFF",
-          }
+          },
         }}
       >
         <body className={`${inter.className} bg-dark-2`}>{children}</body>
