@@ -36,17 +36,10 @@
 >
 > ### Issue 2 : Protecting routes with `clerkMiddleware`
 >
-> ```js
-> const protectedRoutes = createRouteMatcher([
->   "/",
->   "/upcoming",
->   "/previous",
->   "/recordings",
->   "/personal-room",
->   "/meeting(.*)",
-> ]);
+> Check endMeetingButton.tsx
+> Check MeetingRoom.tsx
+> Add more in MeetingSetup.tsx
 >
-> export default clerkMiddleware((auth, req) => {
->   if (protectedRoutes(req)) auth().protect();
-> });
+> ```js
+>
 > ```

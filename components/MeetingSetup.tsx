@@ -94,7 +94,6 @@ const MeetingSetup = ({
           </div>
 
           <div>
-            {/* <Settings className="w-[30px] h-[30px]" /> */}
             <DeviceSettings />
           </div>
         </div>
