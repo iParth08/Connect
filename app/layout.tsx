@@ -4,14 +4,19 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Connect - Stream Video Call",
   description: "A video call webapp by NextJS",
+  icons: {
+    icon: "/icons/logo.svg",
+  },
 };
 
+//!ALERT HERE !
 const frontendApi = "http://localhost:3000";
 
 export default function RootLayout({

@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
 import {
   CallControls,
+  CallingState,
   CallParticipantsList,
   CallStatsButton,
   PaginatedGridLayout,
   SpeakerLayout,
+  useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 import React, { useState } from "react";
 
@@ -18,15 +20,25 @@ import { LayoutList, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
 import EndMeetingButton from "./EndMeetingButton";
+import Loader from "./Loader";
+import NavBar from "./NavBarHide";
+import { useRouter } from "next/navigation";
 
 type CallLayoutType = "speaker-left" | "speaker-right" | "grid";
 
 const MeetingRoom = () => {
+  const router = useRouter();
   const [layout, setlayout] = useState<CallLayoutType>("speaker-left");
   const [showParticipants, setShowParticipants] = useState(false);
 
   const searchParams = useSearchParams();
   const isPersonalRoom = !!searchParams.get("personal"); //get boolean true from truthy
+
+  const { useCallCallingState } = useCallStateHooks();
+  const callingState = useCallCallingState();
+
+  if (callingState !== CallingState.JOINED) return <Loader />;
+
   const CallLayout = () => {
     switch (layout) {
       case "speaker-left":
@@ -37,19 +49,24 @@ const MeetingRoom = () => {
         return <PaginatedGridLayout />;
     }
   };
+
   return (
     <section className="relative h-screen w-full overflow-hidden text-white">
-      <nav className="relative w-full h-[80px] bg-[rgba(0,0,0,0.5)] px-5 grid place-items-center grid-cols-3">
-        <h1>Connect</h1>
-        <span>Avengers Meeting, Join Code</span>
-        <div className="p-5 flex justify-between items-center">
-          <CallStatsButton />
-          <Button>Link To Share</Button>
-          {!isPersonalRoom && <EndMeetingButton />}
-        </div>
-      </nav>
+      <NavBar>
+        <nav className="relative w-full h-[80px] bg-[rgba(0,0,0,0.5)] px-5 grid place-items-center grid-cols-3">
+          <h1 className="text-[26px] font-extrabold text-white max-sm:hidden">
+            Connect
+          </h1>
+          <span>Avengers Meeting, Join Code</span>
+          <div className="p-5 flex justify-between items-center gap-3">
+            <CallStatsButton />
+            <Button className="hover:bg-green-500">Link To Share</Button>
+            {!isPersonalRoom && <EndMeetingButton />}
+          </div>
+        </nav>
+      </NavBar>
 
-      <div className="mt-5 relative flex-center gap-5 ">
+      <div className="size-full relative flex-center gap-5">
         <div className="flex size-full max-w-[1000px] items-center">
           <CallLayout />
         </div>
@@ -63,8 +80,8 @@ const MeetingRoom = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 flex-center w-full gap-5">
-        <CallControls />
+      <div className="fixed bottom-2 flex-center w-full gap-5 flex-wrap">
+        <CallControls onLeave={() => router.push("/")} />
 
         <DropdownMenu>
           <div className="flex-center">

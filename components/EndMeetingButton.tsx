@@ -15,6 +15,7 @@ const EndMeetingButton = () => {
   const { toast } = useToast();
 
   const endMeeting = async () => {
+    console.log("end meeting");
     if (!call) return;
     await call?.endCall();
     router.push("/");
@@ -36,7 +37,7 @@ const EndMeetingButton = () => {
 
   return (
     <Button
-      onClick={() => endMeeting}
+      onClick={endMeeting}
       className="bg-red-500 text-white hover:bg-red-700"
     >
       End Meeting for Everyone

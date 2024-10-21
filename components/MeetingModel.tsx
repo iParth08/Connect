@@ -55,7 +55,7 @@ const MeetingModel = ({
           >
             {title}
           </h1>
-          <p className="text-lg font-normal">{description}</p>
+          <p className="text-lg font-normal text-center">{description}</p>
           {children}
           <Button
             className="bg-blue-1 focus-visible:ring-0 focus-visible:ring-offset-0"
